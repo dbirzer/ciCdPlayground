@@ -15,7 +15,7 @@ new App({
       "Some annoying technology preventing me to finish my ticket and breaking production",
     ],
     // Which CI/CD tools do you use in your project?
-    tools: "Jenkins again, maybe Tekton in the far future",
+    tools: "A huge Github actions setup",
     // What do you want to learn in this workshop?
     expectations: ["Share knowledge about the basics of CI/CD"],
   },
