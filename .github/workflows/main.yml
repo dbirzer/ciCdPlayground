@@ -5,9 +5,19 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version to tag (format: vX.Y.Z)'
+      name:
+        type: choice
+        description: Who to greet
+        options: 
+        - monalisa
+        - cschleiden
+      message:
         required: true
+      use-emoji:
+        type: boolean
+        description: Include 🎉🤣 emojis
+      environment:
+        type: environment
   
 permissions:
   checks: write
@@ -34,10 +44,5 @@ jobs:
       run: yarn build
     - name: Integration tests
       run: yarn test:e2e
-    - name: Print version (fallback)
-      run: |
-        if [ -n "${{ github.event.inputs.version }}" ]; then
-          echo "Version parameter: ${{ github.event.inputs.version }}"
-        else
-          echo "No version parameter provided"
-        fi
+    - name: Send greeting
+      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
