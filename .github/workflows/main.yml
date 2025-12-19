@@ -29,7 +29,9 @@ jobs:
     - name: Send greeting
       run: echo "${{ github.event.inputs.message }}"
     - name: Create Tag
-      run: git tag ${{ github.event.inputs.version }}  
+      run: |
+        git tag ${{ github.event.inputs.version }}
+        git push origin tag ${{ github.event.inputs.version }}
     - name: Install
       run: yarn
     - name: Unit tests
