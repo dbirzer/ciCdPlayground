@@ -29,6 +29,7 @@ jobs:
     - name: Send greeting
       run: echo "${{ github.event.inputs.message }}"
     - name: Create Tag
+      if: "${{ github.event.inputs.message != '' }}"
       run: |
         git tag ${{ github.event.inputs.version }}
         git push origin tag ${{ github.event.inputs.version }}
