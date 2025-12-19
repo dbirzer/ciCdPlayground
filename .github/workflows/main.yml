@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to tag (format: vX.Y.Z)'
+        required: true
   
 permissions:
   checks: write
