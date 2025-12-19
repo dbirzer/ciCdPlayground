@@ -27,9 +27,9 @@ jobs:
     # so it might be a good idea to specify them via an action like actions/setup-node@v4
     - uses: actions/checkout@v4
     - name: Send greeting
-      run: echo "${{ github.event.inputs.message }}"
+      run: echo "${{ github.event.inputs.version }}"
     - name: Create Tag
-      if: "${{ github.event.inputs.message != '' }}"
+      if: "${{ github.event.inputs.version != '' }}"
       run: |
         git tag ${{ github.event.inputs.version }}
         git push origin tag ${{ github.event.inputs.version }}
