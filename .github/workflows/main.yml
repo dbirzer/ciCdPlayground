@@ -34,3 +34,10 @@ jobs:
       run: yarn build
     - name: Integration tests
       run: yarn test:e2e
+    - name: Print version (fallback)
+      run: |
+        if [ -n "${{ github.event.inputs.version }}" ]; then
+          echo "Version parameter: ${{ github.event.inputs.version }}"
+        else
+          echo "No version parameter provided"
+        fi
