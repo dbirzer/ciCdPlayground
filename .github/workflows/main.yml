@@ -36,6 +36,8 @@ jobs:
     # It is not clear which versions these are, 
     # so it might be a good idea to specify them via an action like actions/setup-node@v4
     - uses: actions/checkout@v4
+    - name: Send greeting
+      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
     - name: Install
       run: yarn
     - name: Unit tests
@@ -44,5 +46,4 @@ jobs:
       run: yarn build
     - name: Integration tests
       run: yarn test:e2e
-    - name: Send greeting
-      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+    
