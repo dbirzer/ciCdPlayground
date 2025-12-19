@@ -5,19 +5,9 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options: 
-        - monalisa
-        - cschleiden
-      message:
+      version:
         required: true
-      use-emoji:
-        type: boolean
-        description: Include 🎉🤣 emojis
-      environment:
-        type: environment
+        default: 1.0.0
   
 permissions:
   checks: write
@@ -37,7 +27,12 @@ jobs:
     # so it might be a good idea to specify them via an action like actions/setup-node@v4
     - uses: actions/checkout@v4
     - name: Send greeting
-      run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+      run: echo "${{ github.event.inputs.message }}"
+    - name: Create Tag
+      uses: negz/create-tag@v1
+      with:
+        version: ${{ github.event.inputs.version }}
+        token: ${{ secrets.GITHUB_TOKEN }}  
     - name: Install
       run: yarn
     - name: Unit tests
@@ -46,10 +41,4 @@ jobs:
       run: yarn build
     - name: Integration tests
       run: yarn test:e2e
-    - name: Bump version and push tag
-      uses: ChloePlanet/github-tag-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: true
-          
     
