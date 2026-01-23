@@ -38,3 +38,18 @@ jobs:
       run: yarn build
     - name: Integration tests
       run: yarn test:e2e
+    - name: Create Git tag
+      env:
+        ENVIRONMENT: ${{ github.event.inputs.version || '1.0.0' }}
+      run: |
+        # Configure git (required for CI environments)
+        git config --global user.email "cicd@workshop.foo"
+        git config --global user.name "GitHub Actions"
+    
+        # Create timestamp-based unique tag name
+        TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+        TAG="$ENVIRONMENT-$TIMESTAMP"
+    
+        # Create and push tag
+        git tag $TAG
+        git push origin $TAG
