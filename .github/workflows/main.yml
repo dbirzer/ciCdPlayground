@@ -4,6 +4,12 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Artifact version'
+        type: string
+        default: '1.0.0'
+        required: false
   
 permissions:
   checks: write
@@ -22,6 +28,8 @@ jobs:
     # It is not clear which versions these are, 
     # so it might be a good idea to specify them via an action like actions/setup-node@v4
     - uses: actions/checkout@v4
+    - name: Version
+      run: echo $version
     - name: Install
       run: yarn
     - name: Unit tests
